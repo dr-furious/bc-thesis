@@ -1,4 +1,5 @@
 from image_viewer import image_viewer
+from crop_rois import image_rois_from_coco_json
 
 
 def main():
@@ -11,7 +12,12 @@ def main():
     label_path_cells = "./../tiger-datasets/wsirois/roi-level-annotations/tissue-cells/masks/" + image_name_1
 
     # image_viewer(image_path_cells, label_path_cells, None)
-    image_viewer(image_path_bcss, label_path_bcss, None)
+    # image_viewer(image_path_bcss, label_path_bcss, None)
+
+    path_to_coco_json = "./../tiger-datasets/wsirois/roi-level-annotations/tissue-cells/tiger-coco.json"
+    path_to_images = "./../tiger-datasets/wsirois/roi-level-annotations/tissue-cells/"
+    output_dir = "./cropped_cell_rois/"
+    image_rois_from_coco_json(json_path=path_to_coco_json, image_dir=path_to_images, output_dir=output_dir)
 
 
 if __name__ == '__main__':
