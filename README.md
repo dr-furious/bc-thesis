@@ -5,7 +5,7 @@
 
 ## Folder Structure
 ```md
-my_ml_project/
+root/
 ├── configs/             # Configuration files
 ├── data/                # Dataset files (raw, processed, etc.)
 │   ├── raw/             # Raw, unprocessed data
