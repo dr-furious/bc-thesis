@@ -1,5 +1,4 @@
-from image_viewer import image_viewer
-from crop_rois import image_rois_from_coco_json
+from src.features.crop_rois import image_rois_from_coco_json
 
 
 def main():
@@ -16,7 +15,7 @@ def main():
 
     path_to_coco_json = "./../tiger-datasets/wsirois/roi-level-annotations/tissue-cells/tiger-coco.json"
     path_to_images = "./../tiger-datasets/wsirois/roi-level-annotations/tissue-cells/"
-    output_dir = "./cropped_cell_rois/"
+    output_dir = "data/processed/cropped_cell_rois/"
     image_rois_from_coco_json(json_path=path_to_coco_json, image_dir=path_to_images, output_dir=output_dir)
 
 
