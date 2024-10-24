@@ -15,9 +15,6 @@ env/
 __pycache__/
 *.py[cod]
 
-# Ignore model files
-models/
-
 # directories to ignore:
 data/raw/
 data/processed/
