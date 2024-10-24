@@ -1,5 +1,5 @@
 # directories to ignore:
-./cropped_cell_rois
+./cropped_cell_rois/*
 ./__pycache__/crop_rois.cpython-312.pyc
 
 # files to ignore
