@@ -1,5 +1,14 @@
+# Ignore macOS system files
+.DS_Store
+
+# Ignore PyCharm project files
+.idea/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
 # directories to ignore:
-./cropped_cell_rois/*
-./__pycache__/crop_rois.cpython-312.pyc
+cropped_cell_rois/
 
 # files to ignore
