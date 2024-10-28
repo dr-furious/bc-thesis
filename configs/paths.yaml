@@ -1,0 +1,7 @@
+tissue-bcss:
+  images: "./data/tiger-datasets/wsirois/roi-level-annotations/tissue-bcss/images/"
+  tissue_masks: "./data/tiger-datasets/wsirois/roi-level-annotations/tissue-bcss/masks/"
+tissue-cells:
+  images: "./data/tiger-datasets/wsirois/roi-level-annotations/tissue-cells/images/"
+  tissue_masks: "./data/tiger-datasets/wsirois/roi-level-annotations/tissue-cells/masks/"
+coco_json: "./data/tiger-datasets/wsirois/roi-level-annotations/tissue-cells/tiger-coco.json"

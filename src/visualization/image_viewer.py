@@ -1,9 +1,17 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 
 def image_viewer(path_to_data_image, path_to_label_image, path_to_output_image):
+    if not os.path.exists(path_to_data_image):
+        print(f"Error: Image file not found at {path_to_data_image}")
+        return
+    if not os.path.exists(path_to_label_image):
+        print(f"Error: Label file not found at {path_to_label_image}")
+        return
+
     # Load the histopathology image and label image
     histopathology_img = cv2.imread(path_to_data_image)
     label_img = cv2.imread(path_to_label_image, cv2.IMREAD_GRAYSCALE)

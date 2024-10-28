@@ -1,16 +1,18 @@
 import os
-import json
+from ..utils.load_json import load_json
 from PIL import Image
 
 
 def image_rois_from_coco_json(json_path: str, image_dir: str, output_dir: str, limit: int = 100) -> None:
     """
     """
-    json_file = open(json_path, 'r')
-    data = json.load(json_file)
+    data = load_json(json_path)
 
     images = data['images']
     for image in images:
+        if limit % 10 != 0:
+            limit -= 1
+            continue
         image_id = image['id']
         image_name = image['file_name']
         image_path = os.path.join(image_dir, image_name)
