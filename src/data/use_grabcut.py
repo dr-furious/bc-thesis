@@ -10,21 +10,15 @@ def use_grabcut(image: np.ndarray, iterations_count: int, corner_size=1) -> Tupl
     fg_model: np.ndarray = np.zeros((1, 65), np.float64)
     bg_model: np.ndarray = np.zeros((1, 65), np.float64)
 
-    # Initialize the mask with probable foreground everywhere
-    mask: np.ndarray = np.ones(image.shape[:2], np.uint8) * cv.GC_PR_FGD
-
-    # Set corners as definite background
-    h, w = mask.shape
-    mask[:corner_size, :corner_size] = cv.GC_BGD  # Top-left corner
-    mask[:corner_size, w - corner_size:] = cv.GC_BGD  # Top-right corner
-    mask[h - corner_size:, :corner_size] = cv.GC_BGD  # Bottom-left corner
-    mask[h - corner_size:, w - corner_size:] = cv.GC_BGD  # Bottom-right corner
+    mask = create_mask(image)
 
     mask, bg_model, fg_model = cv.grabCut(image, mask, None, bg_model, fg_model, iterations_count,
                                           cv.GC_INIT_WITH_MASK)
+
+    # Visualize
     mask = np.where((mask == 2) | (mask == 0), 0, 1).astype('uint8')
     img = image * mask[:, :, np.newaxis]
-    plt.imshow(img), plt.colorbar(), plt.show()
+    # plt.imshow(img), plt.colorbar(), plt.show()
 
     return mask, bg_model, fg_model
 
@@ -50,3 +44,27 @@ def use_grabcut_on_all(image_folder: str, output_dir: str, iterations_count: int
         # Save the mask as a PNG file
         cv.imwrite(output_path, mask)
         print(f"Saved mask to {output_path}")
+
+
+def create_mask(image: np.ndarray, num_brightest: int = 20) -> np.ndarray:
+    # Ensure the image is in color
+    assert len(image.shape) == 3 and image.shape[2] == 3, "Image must be a color image (3 channels)."
+
+    # Convert the image to grayscale for brightness computation
+    grayscale_image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+
+    # Initialize the mask with probable foreground everywhere
+    mask = np.ones(grayscale_image.shape, np.uint8) * cv.GC_PR_FGD  # Default to probable foreground
+
+    # Flatten the grayscale image to find the brightest pixel values
+    flat_indices = np.argsort(grayscale_image.ravel())[::-1]  # Indices sorted in descending order
+    brightest_indices = flat_indices[:num_brightest]  # Take the top `num_brightest`
+
+    # Convert flat indices to 2D coordinates
+    brightest_coords = np.unravel_index(brightest_indices, grayscale_image.shape)
+
+    # Update the mask for the brightest pixels
+    rows, cols = brightest_coords  # Extract row and column indices
+    mask[rows, cols] = cv.GC_BGD  # Mark these pixels as definite foreground
+
+    return mask
