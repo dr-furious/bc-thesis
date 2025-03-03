@@ -1,9 +1,8 @@
 from ..utils.load_json import load_json
-import cv2
 import os
-import torch
 from torchvision import transforms
 import torchstain
+import cv2
 
 
 def normalize(json_path: str, img_dir: str, output_img_dir: str, target_img_id: int = 1) -> None:
@@ -19,7 +18,7 @@ def normalize(json_path: str, img_dir: str, output_img_dir: str, target_img_id: 
     target_img = cv2.cvtColor(target_img, cv2.COLOR_BGR2RGB)
 
     # Preparing normalizer
-    normalizer = torchstain.normalizers.MacenkoNormalizer(backend='torch')
+    normalizer = torchstain.normalizers.MultiMacenkoNormalizer('avg-post')
     normalizer.fit(T(target_img))
 
     h_dir = os.path.join(output_img_dir, "hematoxylin")
